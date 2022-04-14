@@ -1,0 +1,48 @@
+﻿@using TesteJr.Models;
+@model HomeModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Clima tempo simples</h1>
+</div>
+
+<div class="card-deck">
+    <div class="card border-primary">
+        <div class="card-header bg-primary text-white">Cidades mais quentes hoje</div>
+        <div class="card-body">
+            @Html.Partial("Cards/MaisFriasOuQuentes", Model.MaisQuentes)
+        </div>
+    </div>
+    <div class="card border-primary">
+        <div class="card-header bg-primary text-white">Cidades mais frias hoje</div>
+        <div class="card-body">
+            @Html.Partial("Cards/MaisFriasOuQuentes", Model.MaisFrias)
+        </div>
+    </div>
+</div>
+
+<br />
+<h4>Cidade: </h4>
+@Html.DropDownList("Cidades", Model.Cidades.Select(sl => new SelectListItem()
+{
+    Text = sl.Nome,
+    Value = sl.Id.ToString()
+}).ToArray(), new
+{
+    @onchange= "obterPrevisoes($('#Cidades').val())"
+})
+<br />
+
+<div id="previsoes"></div>
+
+<script type="text/javascript">
+    async function obterPrevisoes(idCidade) {
+        let html = await $.get('/Home/ObterPrevisoes?idCidade=' + encodeURIComponent(idCidade));
+
+        $('#previsoes')
+            .html(html);
+
+    }
+</script>

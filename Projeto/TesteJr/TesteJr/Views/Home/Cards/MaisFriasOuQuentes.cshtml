@@ -1,0 +1,13 @@
+﻿@using TesteJr.Models;
+@model IEnumerable<TemperaturaCidade>
+
+@foreach (var temp in Model)
+{
+    <table>
+        <tr>
+            <td style="width:35%">@temp.Cidade</td>
+            <td style="width:10%">Min @temp.Minima</td>
+            <td style="width:10%">Max @temp.Maxima</td>
+        </tr>
+    </table>
+}

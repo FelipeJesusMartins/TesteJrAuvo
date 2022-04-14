@@ -1,0 +1,31 @@
+﻿@using System.Globalization
+@using TesteJr.Models;
+@using TesteJr.Controllers;
+@model PrevisaoClima[]
+@{
+    Layout = null;
+}
+
+<h2 class="text-center">Clima para os próximos @HomeController.MaximoDiasListagem dias em @(ViewBag.Cidade)</h2>
+<br />
+<div class="card-deck">
+    @foreach (var temp in Model)
+    {
+        char[] diaSemana = temp.DataPrevisao.Date
+            .ToString("dddd", new CultureInfo("pt-br"))
+            .ToCharArray();
+
+        diaSemana[0] = Char.ToUpper(diaSemana[0]);
+
+        <div class="card text-center">
+            <div class="card-header bg-primary text-white">
+                <h4>@(new string(diaSemana))</h4>
+            </div>
+            <div class="card-body">
+                <h5><i class="fa fa-lg fa-cloud"></i>&ensp;@temp.Clima</h5>
+                <h5>Mínima: @temp.Minima°C</h5>
+                <h5>Máxima: @temp.Maxima°C</h5>
+            </div>
+        </div>
+    }
+</div>
